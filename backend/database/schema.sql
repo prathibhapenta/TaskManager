@@ -1,0 +1,35 @@
+CREATE TABLE IF NOT EXISTS users(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(250) NOT NULL,
+    email VARCHAR(250) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    reset_token TEXT,
+    reset_token_expires TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS todos(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(250) NOT NULL,
+    description TEXT,
+    status VARCHAR(20) DEFAULT 'PENDING'
+     CHECK(status IN ('PENDING', 'IN_PROGRESS', 'DONE')),
+    priority VARCHAR(20) DEFAULT 'MEDIUM'
+     CHECK(priority IN ('LOW', 'MEDIUM', 'HIGH')),
+
+    due_date TIMESTAMP,
+    location VARCHAR(255),
+    file_url TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS audit_logs (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    todo_id INTEGER REFERENCES todos(id) ON DELETE CASCADE,
+    action VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
