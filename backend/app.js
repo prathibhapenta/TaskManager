@@ -23,6 +23,12 @@ const limiter = rateLimit({
 
 app.use(limiter)
 
+app.get("/", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "Task Manager API is running"
+    });
+});
 app.use("/api", authRoutes);
 app.use("/api", taskRoutes);
 app.use(
