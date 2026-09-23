@@ -125,6 +125,9 @@ test("Get Todos with invalid token", async () => {
         expect(response.body.message).toBe("Todo Deleted Successfully")
     })
     afterAll(async () => {
-    await pool.end();
-});
+        await pool.query(
+            "DELETE FROM users WHERE email = $1",
+            [testEmail]
+        );
+    });
 })

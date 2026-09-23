@@ -104,9 +104,12 @@ test("Access Protected route invalid token", async() => {
     expect(response.body.message).toBe("Invalid or expired token")
 })
 
-    afterAll(async() => {
-        await pool.end();
-    })
+    afterAll(async () => {
+        await pool.query(
+            "DELETE FROM users WHERE email = $1",
+            [testEmail]
+        );
+    });
      
 })
 

@@ -4,6 +4,7 @@ import { pool } from "../config/db.js";
 //1. getTodos
 export const getTodos = async(req, res, next) => {
     try{
+        console.log("Logged in user:", req.user);
         const {search, status, priority, page = 1, limit = 10} = req.query;
 
         const pageNumber = Math.max(Number(page), 1);

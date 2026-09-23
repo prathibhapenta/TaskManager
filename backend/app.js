@@ -16,12 +16,12 @@ app.use(express.json());
 app.use(cors())
 app.use(helmet())
 
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-})
+// const limiter = rateLimit({
+//     windowMs: 15 * 60 * 1000,
+//     max: 1000,
+// })
 
-app.use(limiter)
+// app.use(limiter) 
 
 app.get("/", (req, res) => {
     res.status(200).json({
